@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจองอาหาร - โรงเรียน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Sarabun', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-indigo-800">🏫 ระบบจองอาหาร</h1>
+                    <p class="text-xs text-indigo-600">เวอร์ชัน 2.5 - ชำระเสร็จกลับหน้าสั่งอาหาร!</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <div id="currentTime" class="text-lg font-bold text-indigo-700"></div>
+                        <div id="currentDate" class="text-sm text-indigo-600"></div>
+                    </div>
+                    <button onclick="showStudentLogin()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">นักเรียน</button>
+                    <button onclick="showTeacherLogin()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">ครู</button>
+                    <button onclick="showAdminLogin()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors">แอดมิน</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Student Login -->
+    <div id="studentLogin" class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-center mb-6 text-gray-800">เข้าสู่ระบบนักเรียน</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ชื่อนักเรียน</label>
+                    <input type="text" id="studentName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="กรอกชื่อของคุณ">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">เลขประจำตัวนักเรียน</label>
+                    <input type="text" id="studentId" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="กรอกเลขประจำตัวนักเรียน">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ระดับชั้น</label>
+                    <select id="studentGrade" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">เลือกระดับชั้น</option>
+                        <option value="ม.1">ม.1</option>
+                        <option value="ม.2">ม.2</option>
+                        <option value="ม.3">ม.3</option>
+                        <option value="ม.4">ม.4</option>
+                        <option value="ม.5">ม.5</option>
+                        <option value="ม.6">ม.6</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ห้อง</label>
+                    <select id="studentRoom" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">เลือกห้อง</option>
+                    </select>
+                </div>
+                <button onclick="studentLogin()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition-colors font-medium">เข้าสู่ระบบ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Login -->
+    <div id="teacherLogin" class="container mx-auto px-4 py-8 hidden">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-center mb-6 text-gray-800">เข้าสู่ระบบครู</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ชื่อครู</label>
+                    <input type="text" id="teacherName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="กรอกชื่อของคุณ">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">เลขประจำตัวครู</label>
+                    <input type="text" id="teacherId" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="กรอกเลขประจำตัวครู">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">รหัสครู</label>
+                    <input type="password" id="teacherCode" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="กรอกรหัสครู">
+                </div>
+                <button onclick="teacherLogin()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition-colors font-medium">เข้าสู่ระบบ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login -->
+    <div id="adminLogin" class="container mx-auto px-4 py-8 hidden">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-center mb-6 text-gray-800">เข้าสู่ระบบแอดมิน</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">รหัสแอดมิน</label>
+                    <input type="password" id="adminCode" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="กรอกรหัสแอดมิน">
+                </div>
+                <button onclick="adminLogin()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg transition-colors font-medium">เข้าสู่ระบบ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentDashboard" class="container mx-auto px-4 py-8 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-800">สวัสดี <span id="currentStudentName"></span></h2>
+                <div class="text-right">
+                    <p class="text-sm text-gray-600">ยอดค้างชำระ</p>
+                    <p class="text-2xl font-bold text-red-600">฿<span id="studentDebt">0</span></p>
+                    <p class="text-xs text-gray-500">วงเงิน: ฿<span id="creditLimit">1000</span></p>
+                    <div class="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                        <div id="creditBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="showPayment()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">ชำระเงิน</button>
+        </div>
+
+        <!-- Food Menu -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">🍽️ เมนูอาหาร</h3>
+            <div id="foodMenu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Food items will be populated here -->
+            </div>
+        </div>
+
+        <!-- Cart -->
+        <div id="cart" class="bg-white rounded-xl shadow-lg p-6 mt-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">🛒 รายการสั่งซื้อ</h3>
+            <div id="cartItems" class="space-y-2">
+                <p class="text-gray-500 text-center">ยังไม่มีรายการในตะกร้า</p>
+            </div>
+            <div class="border-t pt-4 mt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold">รวมทั้งหมด:</span>
+                    <span class="text-xl font-bold text-blue-600">฿<span id="cartTotal">0</span></span>
+                </div>
+                <button onclick="addToDebt()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg transition-colors font-medium">สั่งซื้อ (จองอาหาร)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Dashboard -->
+    <div id="teacherDashboard" class="container mx-auto px-4 py-8 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-800">สวัสดี อาจารย์<span id="currentTeacherName"></span></h2>
+                <div class="text-right">
+                    <p class="text-sm text-gray-600">ยอดค้างชำระ</p>
+                    <p class="text-2xl font-bold text-red-600">฿<span id="teacherDebt">0</span></p>
+                    <p class="text-xs text-gray-500">วงเงิน: ฿<span id="teacherCreditLimit">2000</span></p>
+                    <div class="w-32 bg-gray-200 rounded-full h-2 mt-1">
+                        <div id="teacherCreditBar" class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="showTeacherPayment()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">ชำระเงิน</button>
+        </div>
+
+        <!-- Food Menu for Teachers -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">🍽️ เมนูอาหาร (สำหรับครู)</h3>
+            <div id="teacherFoodMenu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Food items will be populated here -->
+            </div>
+        </div>
+
+        <!-- Teacher Cart -->
+        <div id="teacherCart" class="bg-white rounded-xl shadow-lg p-6 mt-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">🛒 รายการสั่งซื้อ</h3>
+            <div id="teacherCartItems" class="space-y-2">
+                <p class="text-gray-500 text-center">ยังไม่มีรายการในตะกร้า</p>
+            </div>
+            <div class="border-t pt-4 mt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold">รวมทั้งหมด:</span>
+                    <span class="text-xl font-bold text-green-600">฿<span id="teacherCartTotal">0</span></span>
+                </div>
+                <button onclick="addToTeacherDebt()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg transition-colors font-medium">สั่งซื้อ (จองอาหาร)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div id="paymentPage" class="container mx-auto px-4 py-8 hidden">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-center mb-6 text-gray-800">💳 ชำระเงิน</h2>
+            <div class="text-center mb-6">
+                <p class="text-lg mb-2">ยอดที่ต้องชำระ</p>
+                <p class="text-3xl font-bold text-red-600">฿<span id="paymentAmount">0</span></p>
+                <p class="text-sm text-gray-600 mt-2">จำนวนรายการ: <span id="paymentItems">0</span> รายการ</p>
+            </div>
+            
+            <!-- Order Details -->
+            <div class="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-200">
+                <h4 class="font-bold text-blue-800 mb-3">📋 รายการอาหารที่สั่ง</h4>
+                <div id="paymentOrderList" class="space-y-2 max-h-40 overflow-y-auto">
+                    <!-- Order items will be populated here -->
+                </div>
+            </div>
+
+            <!-- Teacher Order Details -->
+            <div class="bg-green-50 rounded-lg p-4 mb-6 border border-green-200">
+                <h4 class="font-bold text-green-800 mb-3">📋 รายการอาหารที่สั่ง</h4>
+                <div id="teacherPaymentOrderList" class="space-y-2 max-h-40 overflow-y-auto">
+                    <!-- Teacher order items will be populated here -->
+                </div>
+            </div>
+
+            <!-- QR Code Placeholder -->
+            <div class="bg-gray-100 rounded-lg p-8 text-center mb-6">
+                <div class="text-6xl mb-4">📱</div>
+                <p class="font-bold mb-2">สแกน QR Code เพื่อชำระ</p>
+                <p class="text-sm text-gray-600">พร้อมเพย์: 0621621132</p>
+                <div class="mt-4 bg-white p-4 rounded border-2 border-dashed border-gray-300">
+                    <div class="w-32 h-32 mx-auto bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-xs text-gray-500">QR Code</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Upload Section -->
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <h4 class="font-bold text-red-800 mb-3">📸 แนบหลักฐานการชำระเงิน (จำเป็น)</h4>
+                <p class="text-sm text-red-700 mb-3">กรุณาถ่ายรูปหลักฐานการโอนเงินหรือสลิปการชำระเงิน</p>
+                
+                <div class="space-y-3">
+                    <input type="file" id="paymentProof" accept="image/*" capture="environment" 
+                           class="w-full px-3 py-2 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white">
+                    
+                    <div id="imagePreview" class="hidden">
+                        <p class="text-sm text-green-700 font-medium mb-2">✅ รูปภาพที่อัพโหลด:</p>
+                        <img id="previewImg" class="w-full max-w-xs mx-auto rounded-lg border border-gray-300" alt="หลักฐานการชำระเงิน">
+                        <button type="button" onclick="removeImage()" class="mt-2 text-red-600 hover:text-red-800 text-sm underline">ลบรูปภาพ</button>
+                    </div>
+                    
+                    <div id="uploadStatus" class="text-sm text-center">
+                        <span class="text-red-600">⚠️ ยังไม่ได้แนบรูปภาพ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="confirmPayment()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition-colors font-medium">ยืนยันการชำระเงิน</button>
+                <button onclick="backToStudent()" class="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg transition-colors font-medium">ย้อนกลับ</button>
+                <div class="text-center text-sm text-blue-600 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                    <p class="font-medium">✨ ระบบใหม่: ชำระเสร็จกลับหน้าสั่งอาหาร!</p>
+                    <p class="text-xs mt-1">ชำระเงินเสร็จแล้วจะกลับสู่หน้าสั่งอาหารอัตโนมัติ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Payment Page -->
+    <div id="teacherPaymentPage" class="container mx-auto px-4 py-8 hidden">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-bold text-center mb-6 text-gray-800">💳 ชำระเงิน (ครู)</h2>
+            <div class="text-center mb-6">
+                <p class="text-lg mb-2">ยอดที่ต้องชำระ</p>
+                <p class="text-3xl font-bold text-red-600">฿<span id="teacherPaymentAmount">0</span></p>
+                <p class="text-sm text-gray-600 mt-2">จำนวนรายการ: <span id="teacherPaymentItems">0</span> รายการ</p>
+            </div>
+            
+            <!-- Order Details -->
+            <div class="bg-blue-50 rounded-lg p-4 mb-6 border border-blue-200">
+                <h4 class="font-bold text-blue-800 mb-3">📋 รายการอาหารที่สั่ง</h4>
+                <div id="paymentOrderList" class="space-y-2 max-h-40 overflow-y-auto">
+                    <!-- Order items will be populated here -->
+                </div>
+            </div>
+
+            <!-- Teacher Order Details -->
+            <div class="bg-green-50 rounded-lg p-4 mb-6 border border-green-200">
+                <h4 class="font-bold text-green-800 mb-3">📋 รายการอาหารที่สั่ง</h4>
+                <div id="teacherPaymentOrderList" class="space-y-2 max-h-40 overflow-y-auto">
+                    <!-- Teacher order items will be populated here -->
+                </div>
+            </div>
+
+            <!-- QR Code Placeholder -->
+            <div class="bg-gray-100 rounded-lg p-8 text-center mb-6">
+                <div class="text-6xl mb-4">📱</div>
+                <p class="font-bold mb-2">สแกน QR Code เพื่อชำระ</p>
+                <p class="text-sm text-gray-600">พร้อมเพย์: 0621621132</p>
+                <div class="mt-4 bg-white p-4 rounded border-2 border-dashed border-gray-300">
+                    <div class="w-32 h-32 mx-auto bg-gray-200 rounded flex items-center justify-center">
+                        <span class="text-xs text-gray-500">QR Code</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Upload Section for Teacher -->
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <h4 class="font-bold text-red-800 mb-3">📸 แนบหลักฐานการชำระเงิน (จำเป็น)</h4>
+                <p class="text-sm text-red-700 mb-3">กรุณาถ่ายรูปหลักฐานการโอนเงินหรือสลิปการชำระเงิน</p>
+                
+                <div class="space-y-3">
+                    <input type="file" id="teacherPaymentProof" accept="image/*" capture="environment" 
+                           class="w-full px-3 py-2 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white">
+                    
+                    <div id="teacherImagePreview" class="hidden">
+                        <p class="text-sm text-green-700 font-medium mb-2">✅ รูปภาพที่อัพโหลด:</p>
+                        <img id="teacherPreviewImg" class="w-full max-w-xs mx-auto rounded-lg border border-gray-300" alt="หลักฐานการชำระเงิน">
+                        <button type="button" onclick="removeTeacherImage()" class="mt-2 text-red-600 hover:text-red-800 text-sm underline">ลบรูปภาพ</button>
+                    </div>
+                    
+                    <div id="teacherUploadStatus" class="text-sm text-center">
+                        <span class="text-red-600">⚠️ ยังไม่ได้แนบรูปภาพ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="confirmTeacherPayment()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg transition-colors font-medium">ยืนยันการชำระเงิน</button>
+                <button onclick="backToTeacher()" class="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-lg transition-colors font-medium">ย้อนกลับ</button>
+                <div class="text-center text-sm text-green-600 bg-green-50 p-3 rounded-lg border border-green-200">
+                    <p class="font-medium">✨ ระบบใหม่: ชำระเสร็จกลับหน้าสั่งอาหาร!</p>
+                    <p class="text-xs mt-1">ชำระเงินเสร็จแล้วจะกลับสู่หน้าสั่งอาหารอัตโนมัติ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="container mx-auto px-4 py-8 hidden">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">🔧 แผง
